@@ -49,7 +49,7 @@ export default function Home() {
 
             ) : Array.isArray(posts) && posts.length > 0 ? (
 
-              <div className="grid grid-cols-3">
+              <div className="grid grid-cols-3 gap-2">
                 {posts.map((post) => {
                   return (
                     <Card key={post.id}>

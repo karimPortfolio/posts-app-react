@@ -3,10 +3,10 @@ import api from "../boot/api";
 import { AuthStore } from "./AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
-export const postsStore = createContext();
+export const categoriesStore = createContext();
 
-const PostsContext = ({ children }) => {
-  const [posts, setPosts] = useState([]);
+const CategoriesContext = ({ children }) => {
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [validation, setValidation] = useState(null);
   const { auth } = useContext(AuthStore);
@@ -14,13 +14,13 @@ const PostsContext = ({ children }) => {
   const errorStatus = [401, 400, 422];
   const { toast } = useToast();
 
-  const fetchPosts = async () => {
+  const fetchCategories = async () => {
     if (!auth) return;
     setLoading(true);
     try {
-      const response = await api.get("/posts");
+      const response = await api.get("/categories");
       if (response.status === 200) {
-        setPosts(response.data);
+        setCategories(response.data);
       }
     } catch (err) {
       if (errorStatus.includes(err.status)) return;
@@ -35,7 +35,7 @@ const PostsContext = ({ children }) => {
     }
   };
 
-  const createPost = async (data) => {
+  const createCategory = async (data) => {
     console.log(data);
     if (!auth) {
       toast({
@@ -45,15 +45,9 @@ const PostsContext = ({ children }) => {
       });
     }
     try {
-      const response = await api.post("/posts", data)
+      const response = await api.post("/categories", data)
       if (response.status == 200) {
-        toast({
-          title: "Success",
-          description: "Post has been created with success.",
-          variant: "success",
-          className: "bg-green-500 text-white"
-        });
-        await fetchPosts();
+        console.log(response.data);
       }
     }
     catch (err) {
@@ -81,13 +75,13 @@ const PostsContext = ({ children }) => {
   }
 
   const value = {
-    posts,
-    fetchPosts,
+    categories,
+    fetchCategories,
     loading,
-    createPost
+    createCategory
   };
 
-  return <postsStore.Provider value={value}>{children}</postsStore.Provider>;
+  return <categoriesStore.Provider value={value}>{children}</categoriesStore.Provider>;
 };
 
-export default PostsContext;
+export default CategoriesContext;

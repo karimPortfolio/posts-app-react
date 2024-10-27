@@ -13,11 +13,11 @@ function App() {
             key={index}
             path={route.path}
             element={
-              // <ProtectedRoute>
+              
               <AppLayout route={route} >
                 <route.component />
               </AppLayout>
-              // </ProtectedRoute>
+             
             }
           />
         ))}

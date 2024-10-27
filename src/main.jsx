@@ -5,13 +5,16 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import AuthContext from "./context/AuthContext.jsx";
 import PostsContext from "./context/PostsContext.jsx";
+import CategoriesContext from "./context/CategoryContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AuthContext>
         <PostsContext>
-          <App />
+          <CategoriesContext>
+            <App />
+          </CategoriesContext>
         </PostsContext>
       </AuthContext>
     </BrowserRouter>
