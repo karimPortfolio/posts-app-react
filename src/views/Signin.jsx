@@ -10,12 +10,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthStore } from "../context/AuthContext";
+import { FaRegEye } from "react-icons/fa";
+
 
 export default function Signin() {
   const [credentials, setCredentials] = useState({});
   const { login, validation, loading } = useContext(AuthStore);
+
+  const passwordInput = useRef("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +28,10 @@ export default function Signin() {
   const handleLogin = () => {
     login(credentials);
   };
+
+  const handleShowPassword = () => {
+    passwordInput.current.type = passwordInput.current.type === 'password' ? 'text' : 'password'; 
+  }
 
   return (
     <div className="flex justify-center items-center h-screen flex-col">
@@ -43,19 +51,23 @@ export default function Signin() {
                   setCredentials({ ...credentials, email: e.target.value })
                 }
               />
-              { validation.message && <small className="text-red-600">{validation.message}</small> }
+              {validation.message && <small className="text-red-600">{validation.message}</small>}
             </div>
-            <div className="flex flex-col space-y-1.5 mt-4">
+            <div className="flex flex-col space-y-1.5 mt-4 relative">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
+                ref={passwordInput}
                 type='password'
                 placeholder="Enter your password"
                 onChange={(e) =>
                   setCredentials({ ...credentials, password: e.target.value })
                 }
               />
-              { validation.message && <small className="text-red-600">{validation.message}</small> }
+              <Button variant="ghost" className="absolute inset-y-[15px] hover:bg-transparent right-0 px-4" onClick={handleShowPassword}>
+                <FaRegEye />
+              </Button>
+              {validation.message && <small className="text-red-600">{validation.message}</small>}
             </div>
             <div className="flex items-center space-x-2 mt-4">
               <Checkbox id="terms" />

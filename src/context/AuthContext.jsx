@@ -29,7 +29,7 @@ const AuthContext = ({ children }) => {
     } catch (err) {
       if (errorStatus.includes(err.status)) {
         if (err.status === 422 || err.status === 403) {
-          setValidation(err.response.data);   
+          setValidation(err.response.data);
         }
         toast({
           title: "Error",
@@ -62,7 +62,7 @@ const AuthContext = ({ children }) => {
     } catch (err) {
       if (errorStatus.includes(err.status)) {
         if (err.status === 422 || err.status === 403) {
-          setValidation(err.response.data);   
+          setValidation(err.response.data);
         }
         toast({
           title: "Error",
@@ -113,11 +113,9 @@ const AuthContext = ({ children }) => {
   const logout = () => {
     try {
       const response = api.get("/logout");
-      if (response.status === 200) {
-        setAuth(false);
-        setUser(null);
-        navigate("/signin", { replace: true });
-      }
+      setAuth(false);
+      setUser(null);
+      navigate("/signin", { replace: true });
     } catch (err) {
       console.log(err);
       if (err.status in errorStatus) {
@@ -137,7 +135,7 @@ const AuthContext = ({ children }) => {
     }
   };
 
-  
+
 
   const value = {
     auth,
